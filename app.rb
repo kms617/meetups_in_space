@@ -53,3 +53,31 @@ end
 get '/example_protected_page' do
   authenticate!
 end
+
+get '/meetups' do
+  @meetups = Meetup.all.order(name: :asc )
+
+  erb :'meetup/index'
+end
+
+get '/meetups/new' do
+
+  erb :'meetup/new'
+end
+
+get '/meetups/:id' do
+  @meetup = Meetup.find(params[:id])
+
+  erb :'meetup/show'
+end
+
+post '/meetups' do
+  @meetup = Meetup.new(params[:meetup])
+
+  if @meetup.save
+    flash[:notice] = "Your new meetup was successfully added."
+    redirect "/meetups/#{@meetup.id}"
+  end
+end
+
+
