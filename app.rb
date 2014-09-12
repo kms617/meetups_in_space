@@ -61,6 +61,7 @@ get '/meetups' do
 end
 
 get '/meetups/new' do
+  authenticate!
 
   erb :'meetup/new'
 end
@@ -72,6 +73,8 @@ get '/meetups/:id' do
 end
 
 post '/meetups' do
+  authenticate!
+
   @meetup = Meetup.new(params[:meetup])
 
   if @meetup.save
