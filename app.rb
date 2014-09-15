@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'omniauth-github'
+require 'pry'
 
 require_relative 'config/application'
 
@@ -68,6 +69,7 @@ end
 
 get '/meetups/:id' do
   @meetup = Meetup.find(params[:id])
+  @membership = @meetup.memberships.find_by(user: current_user)
 
   erb :'meetup/show'
 end
@@ -98,3 +100,12 @@ post '/meetups/:meetup_id/memberships' do
   end
 end
 
+delete '/memberships/:id' do
+  authenticate!
+
+  @membership = current_user.memberships.find(params[:id])
+  @membership.destroy
+
+  flash[:notice] = "You have successfully left this meetup"
+  redirect back
+end

@@ -10,3 +10,9 @@
 
 <p><%= @meetup.description %></p>
 
+<% if signed_in? && current_user.meetups.include?(@meetup) %>
+<form action="/memberships/<%= @membership.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Leave this Meetup">
+</form>
+<% end %>
