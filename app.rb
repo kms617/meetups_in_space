@@ -118,8 +118,8 @@ post '/meetups/:meetup_id/comments' do
   meetup = Meetup.find(params[:meetup_id])
   @comment = Comment.new(user_id: current_user.id,
                         meetup_id: meetup.id,
-                        title: params[:comment][:title],
-                        comment: params[:comment][:comment])
+                        title: params[:title],
+                        comment: params[:comment])
 binding.pry
 
   if @comment.save
