@@ -71,6 +71,7 @@ get '/meetups/:id' do
   @meetup = Meetup.find(params[:id])
   @membership = @meetup.memberships.find_by(user: current_user)
   @members = @meetup.users.order(username: :asc)
+  @comments = @meetup.comments.order(created_at: :desc)
 
   erb :'meetup/show'
 end
@@ -110,3 +111,24 @@ delete '/memberships/:id' do
   flash[:notice] = "You have successfully left this meetup"
   redirect back
 end
+
+post '/meetups/:meetup_id/comments' do
+  authenticate!
+
+  meetup = Meetup.find(params[:meetup_id])
+  @comment = Comment.new(user_id: current_user.id,
+                        meetup_id: meetup.id,
+                        title: params[:comment][:title],
+                        comment: params[:comment][:comment])
+binding.pry
+
+  if @comment.save
+    flash[:notice] = "Your comment has been posted!"
+    redirect "/meetups/#{meetup.id}"
+  else
+    flash[:notice] = "There was an error; please try again."
+    redirect "/meetups/#{meetup.id}"
+  end
+end
+
+
