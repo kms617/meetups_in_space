@@ -70,6 +70,7 @@ end
 get '/meetups/:id' do
   @meetup = Meetup.find(params[:id])
   @membership = @meetup.memberships.find_by(user: current_user)
+  @members = @meetup.users.order(username: :asc)
 
   erb :'meetup/show'
 end
