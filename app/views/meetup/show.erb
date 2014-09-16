@@ -10,17 +10,19 @@
 
 <p><%= @meetup.description %></p>
 
+
 <h2>Members</h2>
 <% if signed_in? && current_user.meetups.include?(@meetup) %>
   <% if @members.any? %>
   <% @members.each do |user|%>
-  <h3><%= user.username %></h3>
-  <p><img src="<%= user.avatar_url %>"></p>
+  <div class ="members">
+  <h3><img src="<%= user.avatar_url %>"> <%= user.username %></h3></div>
   <% end %>
   <% else %>
   <p>There are no members yet.</p>
   <% end %>
 <% end %>
+
 
 <% if signed_in? && current_user.meetups.include?(@meetup) %>
 <form action="/memberships/<%= @membership.id %>" method="post">

@@ -51,3 +51,13 @@ label {
   padding: 1em;
   background-color: #3B9089;
 }
+
+.members {
+  display: inline;
+}
+
+.members img {
+  max-width: 75px;
+  height: auto;
+  object-fit: cover;
+}
