@@ -1,0 +1,70 @@
+<% require 'pry' %>
+<h1><%= @meetup.name %></h1>
+
+<p><%= @meetup.location %></p>
+
+<% if signed_in? && !current_user.meetups.include?(@meetup) %>
+<form action="/meetups/<%= @meetup.id %>/memberships" method="post">
+  <input type="submit" value="Join this Meetup">
+</form>
+<%end %>
+
+<p><%= @meetup.description %></p>
+
+<div class="members">
+<h2>Members</h2>
+<% if signed_in? && current_user.meetups.include?(@meetup) %>
+  <% if @members.any? %>
+  <% @members.each do |user|%>
+  <div class ="gravatar">
+  <h3><img src="<%= user.avatar_url %>"> <%= user.username %></h3></div>
+  <% end %>
+  <% else %>
+  <p>There are no members yet.</p>
+  <% end %>
+<% end %>
+ </div>
+
+<% if signed_in? && current_user.meetups.include?(@meetup) %>
+<form action="/memberships/<%= @membership.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Leave this Meetup">
+</form>
+<% end %>
+
+<% if signed_in? && current_user.meetups.include?(@meetup) %>
+
+<h2>Make a Comment</h2>
+<div class="comment_form">
+
+  <form action="/meetups/<%= @meetup.id %>/comments" method="post">
+      <label for="title">Title</label>
+      <input type="text" name="title" placeholder="Title" >
+
+    <label for="comment">Comment</label>
+      <textarea cols="15" name="comment" placeholder="Comments" rows="10">
+      </textarea>
+
+    <input id="submit" type="submit" value="Comment">
+  </form>
+</div>
+<% end %>
+
+  <%if signed_in? && current_user.meetups.include?(@meetup) %>
+  <h2>Comments</h2>
+    <%if @comments.any? %>
+    <% @comments.each do |comment| %>
+      <div class ="comment_gravatar"><img src="<%= comment.user.avatar_url %>"></div>
+      <p>Posted by: <%= comment.user.username %> at: <%= comment.created_at %></p>
+      <p>Subject: <%= comment.title %></p>
+      <p>Comment: <%= comment.comment %></p>
+
+      <hr>
+    <% end %>
+  <% else %>
+    <p>There are no comments, be the first to post!</p>
+  <% end %>
+<% end %>
+
+
+

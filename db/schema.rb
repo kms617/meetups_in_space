@@ -11,10 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140606200404) do
+ActiveRecord::Schema.define(version: 20140916155817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "meetup_id",  null: false
+    t.string   "title"
+    t.text     "comment",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meetups", force: true do |t|
+    t.string   "name",        null: false
+    t.string   "location",    null: false
+    t.text     "description", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "memberships", force: true do |t|
+    t.integer "user_id",                      null: false
+    t.integer "meetup_id",                    null: false
+    t.string  "role",      default: "member", null: false
+  end
+
+  add_index "memberships", ["user_id", "meetup_id"], name: "index_memberships_on_user_id_and_meetup_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "provider",   null: false

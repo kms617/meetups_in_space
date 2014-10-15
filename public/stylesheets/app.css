@@ -10,6 +10,19 @@ a:visited {
   text-decoration: none;
 }
 
+form {
+  color: #000000;
+}
+
+label {
+  display: block;
+  color: #FFFFFF;
+}
+
+.form-input-wrapper {
+  margin-bottom: 1em;
+}
+
 .container {
   max-width: 1024px;
   margin: 0 auto;
@@ -37,4 +50,35 @@ a:visited {
 .flash {
   padding: 1em;
   background-color: #3B9089;
+}
+
+.gravatar {
+  display: inline;
+}
+
+.gravatar img {
+  max-width: 75px;
+  height: auto;
+  object-fit: cover;
+}
+
+.comment_form {
+  display: inline;
+}
+.comment_form label{
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.comment_form textarea{
+    width:500px;
+    border:1px solid #7ac9b7;
+    border-radius:5px;
+    margin-bottom:15px;
+    resize:none
+}
+.comment_gravatar img{
+  display: inline;
+  max-width: 50px;
+  height: auto;
+  object-fit: cover;
 }
